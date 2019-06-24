@@ -23,15 +23,33 @@ class List extends Component {
   }
 
   getTodos() {
-
+    axios
+      .get('/api')
+      .then( ({data}) => {
+        this.setState({ todos: data });
+      })
+      .catch( (err) => console.error('we got nothing', err));
   }
 
   postTodo(todo) {
-
+    axios
+      .post('/api', {todo})
+      .then( ({data}) => {
+        console.log(data); 
+        this.setState({ todos: data });
+      })
+      .catch( (err) => console.error('could not post', err));
   }
 
-  deleteTodo(index) {
 
+  //localhost:3000/api/?index:1 to delete in postman
+  deleteTodo(index) {
+    axios
+      .delete('/api', {data: {index}} )
+      .then(({data}) => {
+        this.setState({todos: data })
+      })
+      .catch( (err) => console.log(err));
   }
 
   handleChange(event) {
